@@ -26,15 +26,23 @@ int main()
 
   // CLSAByte * Lecteur = new CLSAByte;
 
-  CLecteurRFID *Badge = new CLecteurRFID;
+  CLecteurRFID *pBadge = new CLecteurRFID;
 
-  Badge->Scanner();
+  int Indice;
+  std::vector < string > vsEPC;
 
-  Badge->GetListeEPC();
+  pBadge->Scanner();
 
-  Badge->~CLecteurRFID();
+  vsEPC = pBadge->GetListeEPC();
 
-  delete Badge;
+  for(Indice = 0; Indice < vsEPC.size(); Indice++ )
+  {
+    cout << "Numéro Badge : " << vsEPC[Indice] << endl;
+  }
+
+  pBadge->~CLecteurRFID();
+
+  delete pBadge;
 }
 
 /*while (1) {

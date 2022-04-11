@@ -37,6 +37,7 @@ CLecteurRFID::CLecteurRFID() {
 
 }
 
+
 CLecteurRFID::~CLecteurRFID() {
 
     pLecteur -> Fermer();
@@ -44,7 +45,6 @@ CLecteurRFID::~CLecteurRFID() {
     delete pLecteur;
 
   }
-
 
 
 char CLecteurRFID::Scanner() {
@@ -94,12 +94,12 @@ char CLecteurRFID::Scanner() {
   CRCRecu = CRCRecu << 8;
   CRCRecu = CRCRecu + LSB;
 
-  cout << "CRCs : " << hex << CRCCalcul << " " << CRCRecu << endl;
+  //cout << "CRCs : " << hex << CRCCalcul << " " << CRCRecu << endl;
 
-  if (CRCRecu != CRCCalcul) {
+  /*if (CRCRecu != CRCCalcul) {
     cout << "Le CRCRecu est different de CRCCalcul" << endl;
   } else {
-    cout << "Le CRCRecu est le même que CRCCalcul" << endl;
+    cout << "Le CRCRecu est le même que CRCCalcul" << endl;*/
 
     if (this -> TrameRecu[3] == 1) // Status 
     {
@@ -134,29 +134,23 @@ char CLecteurRFID::Scanner() {
       cout << " Pas de Badge à scanner ! " << endl;
     }
 
-  }
-
 }
 
 
 vector < string > CLecteurRFID::GetListeEPC() {
 
-  int Indice;
-
-     if (this -> TrameRecu[3] == 1) // Status 
-     {
-      for (Indice = 0; Indice < this -> ListeEPCsRecus.size(); Indice++)
-
-        cout << "Donnees EPC : " << this -> ListeEPCsRecus[Indice] << endl;
-      }
+  
+  return this->ListeEPCsRecus;
 
 }
+
 
 string CLecteurRFID::ObtenirEPC(char IndiceEPC) {
 
   int Indice;
 
 }
+
 
 unsigned int CLecteurRFID::uiCrc16Cal(unsigned char const * pucY, unsigned char ucX) {
 
