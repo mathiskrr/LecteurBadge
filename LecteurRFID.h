@@ -11,25 +11,23 @@
 
 using namespace std;
 
-class CLectureBadgeRFID {
+class CLecteurRFID {
 
   private:
 
-    CLSAByte * Lecteur;
+    CLSAByte * pLecteur;
     std::vector < char > TrameInventaire;
     std::vector < char > TrameRecu;
-    std::vector < string > ListeEPCRecu;
-    int Indice;
+    std::vector < string > ListeEPCsRecus;
 
     unsigned int uiCrc16Cal(unsigned char const * pucY, unsigned char ucX);
 
   public:
 
-    CLectureBadgeRFID();
-    ~CLectureBadgeRFID();
+    CLecteurRFID();
+    ~CLecteurRFID();
     char Scanner();
-    char FinScanner();
-    vector < string > ObtenirListeEPC();
+    vector < string > GetListeEPC();
     string ObtenirEPC(char IndiceEPC);
 
 };

@@ -11,7 +11,7 @@
 
 #include <errno.h>
 #include "LSAByte.h"
-#include "LectureBadgeRFID.h"
+#include "LecteurRFID.h"
 
 #define EXIT_SUCCESS 0
 
