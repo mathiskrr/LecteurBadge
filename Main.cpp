@@ -33,15 +33,17 @@ int main()
 
   pBadge->Scanner();
 
-  vsEPC = pBadge->GetListeEPC();
+  usleep(1000000);
+
+  cout << "Numéro Badge : " << pBadge->GetEPC(0) << endl;
+
+  /*vsEPC = pBadge->GetListeEPC();
 
   for(Indice = 0; Indice < vsEPC.size(); Indice++ )
   {
     cout << "Numéro Badge : " << vsEPC[Indice] << endl;
-  }
-
-  pBadge->~CLecteurRFID();
-
+  }*/
+  
   delete pBadge;
 }
 

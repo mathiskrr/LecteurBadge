@@ -28,7 +28,7 @@ class CLecteurRFID {
     ~CLecteurRFID();
     char Scanner();
     vector < string > GetListeEPC();
-    string ObtenirEPC(char IndiceEPC);
+    string GetEPC(char IndiceEPC);
 
 };
 

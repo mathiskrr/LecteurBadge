@@ -39,11 +39,11 @@ CLecteurRFID::CLecteurRFID() {
 
 
 CLecteurRFID::~CLecteurRFID() {
-
+    cout << "test1" << endl;
     pLecteur -> Fermer();
-    
+    cout << "test1" << endl;
     delete pLecteur;
-
+    cout << "test1" << endl;
   }
 
 
@@ -62,6 +62,8 @@ char CLecteurRFID::Scanner() {
     int Indice;
 
     pLecteur -> ViderTampon();
+
+    ListeEPCsRecus.clear();
 
     // Envoie de la TrameInventaire : Len / Adr / Cmd ( Inventory ) / LSB-CRC16 / MSB-CRC16
 
@@ -145,9 +147,11 @@ vector < string > CLecteurRFID::GetListeEPC() {
 }
 
 
-string CLecteurRFID::ObtenirEPC(char IndiceEPC) {
+string CLecteurRFID::GetEPC(char IndiceEPC) {
 
-  int Indice;
+  cout << "Element : " << ListeEPCsRecus[0];
+
+  return this->ListeEPCsRecus[IndiceEPC];
 
 }
 
