@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <linux/serial.h>
 #include <errno.h>
+#include <iomanip>
 
 #include "LecteurRFID.h"
 #include "LSAByte.h"
@@ -39,11 +40,11 @@ CLecteurRFID::CLecteurRFID() {
 
 
 CLecteurRFID::~CLecteurRFID() {
-    cout << "test1" << endl;
+      cout << "test1" << endl;
     pLecteur -> Fermer();
-    cout << "test1" << endl;
+      cout << "test1" << endl;
     delete pLecteur;
-    cout << "test1" << endl;
+      cout << "test1" << endl;
   }
 
 
@@ -61,50 +62,56 @@ char CLecteurRFID::Scanner() {
     unsigned int NbOctetEPC;
     int Indice;
 
-    pLecteur -> ViderTampon();
+      pLecteur -> ViderTampon();
 
-    ListeEPCsRecus.clear();
+      //cout << "Taille : " << ListeEPCsRecus.size() << endl;
+      
+      ListeEPCsRecus.clear();
+      TrameRecu.clear();
 
-    // Envoie de la TrameInventaire : Len / Adr / Cmd ( Inventory ) / LSB-CRC16 / MSB-CRC16
+      //cout << "Taille : " << ListeEPCsRecus.size() << endl;
 
-    pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[0]);
-    pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[1]);
-    pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[2]);
-    pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[3]);
-    pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[4]);
+      // Envoie de la TrameInventaire : Len / Adr / Cmd ( Inventory ) / LSB-CRC16 / MSB-CRC16
 
-    while (pLecteur -> RecevoirCaractere( & len) != 0);
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[0]);
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[1]);
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[2]);
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[3]);
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[4]);
 
-  this -> TrameRecu.push_back(len);
+      usleep(100000);
 
-  for (i = 1; i <= len; i = i + 1) {
+      while (pLecteur -> RecevoirCaractere( & len) != 0);
 
-    int Resultat;
-    do {
-      Resultat = pLecteur -> RecevoirCaractere( & Donnees);
-    } while (Resultat != 0);
+    this -> TrameRecu.push_back(len);
 
-    this -> TrameRecu.push_back(Donnees);
-  }
+    for (i = 1; i <= len; i = i + 1) {
 
-  CRCCalcul = uiCrc16Cal((const unsigned char * ) & this -> TrameRecu[0], len - 2 + 1);
+      int Resultat;
+      do {
+        Resultat = pLecteur -> RecevoirCaractere( & Donnees);
+      } while (Resultat != 0);
 
-  MSB = this -> TrameRecu[len - 1 + 1];
-  LSB = this -> TrameRecu[len - 2 + 1];
+      this -> TrameRecu.push_back(Donnees);
+    }
 
-  CRCRecu = MSB;
-  CRCRecu = CRCRecu << 8;
-  CRCRecu = CRCRecu + LSB;
+    CRCCalcul = uiCrc16Cal((const unsigned char * ) & this -> TrameRecu[0], len - 2 + 1);
 
-  //cout << "CRCs : " << hex << CRCCalcul << " " << CRCRecu << endl;
+    MSB = this -> TrameRecu[len - 1 + 1];
+    LSB = this -> TrameRecu[len - 2 + 1];
 
-  /*if (CRCRecu != CRCCalcul) {
-    cout << "Le CRCRecu est different de CRCCalcul" << endl;
-  } else {
-    cout << "Le CRCRecu est le même que CRCCalcul" << endl;*/
+    CRCRecu = MSB;
+    CRCRecu = CRCRecu << 8;
+    CRCRecu = CRCRecu + LSB;
+
+    /*for(Indice = 0; Indice < TrameRecu.size(); Indice++ )
+    {
+      cout << "TrameRecu :" << hex << setfill ('0') << setw(2) << (int)TrameRecu[ Indice ] << endl;
+    }*/
 
     if (this -> TrameRecu[3] == 1) // Status 
     {
+
 
       Indice = 4;
       NbEPC = this -> TrameRecu[Indice++];
@@ -124,34 +131,36 @@ char CLecteurRFID::Scanner() {
 
         }
 
-        //cout << DonneesEPC << endl;
-
         this -> ListeEPCsRecus.push_back(DonneesEPC);
 
         NbEPC--;
 
       }
 
-    } else {
-      cout << " Pas de Badge à scanner ! " << endl;
     }
+
+    return ListeEPCsRecus.size();
 
 }
 
 
 vector < string > CLecteurRFID::GetListeEPC() {
 
-  
   return this->ListeEPCsRecus;
 
 }
 
 
 string CLecteurRFID::GetEPC(char IndiceEPC) {
-
-  cout << "Element : " << ListeEPCsRecus[0];
-
-  return this->ListeEPCsRecus[IndiceEPC];
+  
+  if( IndiceEPC < ListeEPCsRecus.size() )
+  {
+    return this->ListeEPCsRecus[IndiceEPC];
+  }
+  else
+  {
+    return "";
+  }
 
 }
 

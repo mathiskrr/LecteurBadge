@@ -21,30 +21,44 @@ using namespace std;
 
 int main()
 {
+    CLecteurRFID *pBadge = new CLecteurRFID;
+    
+    while(1){
+      // Création de l'objet Lecteur de la classe CLSAByte
 
-  // Création de l'objet Lecteur de la classe CLSAByte
+      // CLSAByte * Lecteur = new CLSAByte;
 
-  // CLSAByte * Lecteur = new CLSAByte;
+      int Indice;
+      std::vector < string > vsEPC;
+      char NbEPCLues;
 
-  CLecteurRFID *pBadge = new CLecteurRFID;
+      pBadge->Scanner();
 
-  int Indice;
-  std::vector < string > vsEPC;
+      usleep(100000);
 
-  pBadge->Scanner();
+      NbEPCLues = pBadge->Scanner();
 
-  usleep(1000000);
+      vsEPC = pBadge->GetListeEPC();
 
-  cout << "Numéro Badge : " << pBadge->GetEPC(0) << endl;
+      cout << "NbEPCLues : " << NbEPCLues << endl;
+      
+      if( NbEPCLues == 0)
+      {
+        cout << "Pas de Badge à scanner !" << endl;
+      }else{
+        cout << "Numéro Badge : " << pBadge->GetEPC(0) << endl;
 
-  /*vsEPC = pBadge->GetListeEPC();
+        for(Indice = 0; Indice < vsEPC.size(); Indice++ )
+        {
 
-  for(Indice = 0; Indice < vsEPC.size(); Indice++ )
-  {
-    cout << "Numéro Badge : " << vsEPC[Indice] << endl;
-  }*/
-  
-  delete pBadge;
+          cout << "Liste Numéro Badge : " << vsEPC[Indice] << endl;
+
+        }
+      }
+    }
+
+    delete pBadge;
+
 }
 
 /*while (1) {
