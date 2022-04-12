@@ -40,7 +40,7 @@ int main()
 
       vsEPC = pBadge->GetListeEPC();
 
-      cout << "NbEPCLues : " << NbEPCLues << endl;
+      cout << "NbEPCLues : " << (int)NbEPCLues << endl;
       
       if( NbEPCLues == 0)
       {

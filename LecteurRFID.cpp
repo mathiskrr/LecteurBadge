@@ -40,11 +40,11 @@ CLecteurRFID::CLecteurRFID() {
 
 
 CLecteurRFID::~CLecteurRFID() {
-      cout << "test1" << endl;
+      //cout << "test1" << endl;
     pLecteur -> Fermer();
-      cout << "test1" << endl;
+      //cout << "test1" << endl;
     delete pLecteur;
-      cout << "test1" << endl;
+      //cout << "test1" << endl;
   }
 
 
