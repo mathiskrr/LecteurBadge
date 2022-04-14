@@ -1,5 +1,5 @@
-#ifndef RFID_H
-#define RFID_H
+#ifndef LECTEUR_RFID_H
+#define LECTEUR_RFID_H
 
 #include <string.h>
 #include <string>
@@ -32,4 +32,4 @@ class CLecteurRFID {
 
 };
 
-#endif // RFID_H
+#endif // LECTEUR_RFID_H

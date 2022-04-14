@@ -6,9 +6,14 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
 
 #include "LSAByte.h"
 #include "LecteurRFID.h"
+#include "VerifBDD.h"
 
 using namespace std;
 
@@ -18,6 +23,8 @@ using namespace std;
 int main()
 {
     CLecteurRFID *pBadge = new CLecteurRFID;
+    CVerifBDD *pBDD = new CVerifBDD;
+
     
     while(1){
 
@@ -48,8 +55,12 @@ int main()
 
         }
       }
+
+      pBDD->ConnexionBDD("tcp://192.168.0.28:3306", "mathis_carrere", "sbRQi87R7");
+
     }
 
+    delete pBDD;
     delete pBadge;
 
 }

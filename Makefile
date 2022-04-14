@@ -12,10 +12,14 @@ LSAByte.o: LSAByte.cpp
 # compiling the source file.
 LecteurRFID.o: LecteurRFID.cpp
 	g++ -g -Wall -c LecteurRFID.cpp
+
+# compiling the source file.
+VerifBDD.o: VerifBDD.cpp
+	g++ -g -Wall -c VerifBDD.cpp
 	
 # linking the program.
-Main: Main.o LSAByte.o LecteurRFID.o
-	g++ -g Main.o LSAByte.o LecteurRFID.o -o Main
+Main: Main.o LSAByte.o LecteurRFID.o VerifBDD.o
+	g++ -g Main.o LSAByte.o LecteurRFID.o VerifBDD.o -o Main -lmysqlcppconn
 
 # cleaning everything that can be automatically recreated with "make".
 clean:
