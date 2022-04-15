@@ -29,18 +29,27 @@ CVerifBDD::CVerifBDD() {
 
     this -> pBadge = new CLecteurRFID;
 
-    this -> pDriver = new sql::mysql::MySQL_Driver;
-    this -> pConnector = new sql::Connection;
-    this -> pStatement = new sql::Statement;
-    this -> pResult = new sql::ResultSet;
-
 }
 
 
 CVerifBDD::~CVerifBDD() {
 
     delete pBadge;
-    
+
+}
+
+
+void CVerifBDD::ConnexionBDD() {
+
+    // Connexion a la Base de données
+    pDriver = sql::mysql::get_mysql_driver_instance();
+    pConnector = pDriver -> connect( "tcp://192.168.0.28:3306", "mathis_carrere", "sbRQi87R7" );
+    pStatement = pConnector -> createStatement();
+
+}
+
+void CVerifBDD::FermetureBDD() {
+
     delete pDriver;
     delete pResult;
     delete pStatement;
@@ -48,12 +57,28 @@ CVerifBDD::~CVerifBDD() {
 
 }
 
+string CVerifBDD::VerificationBadge( string NumeroEPC ) {
+    
+    ConnexionBDD();
 
-void CVerifBDD::ConnexionBDD( string AdresseBDD, string Identifiant, string Mdp ) {
+    pResult = pStatement->executeQuery( "SELECT badge_number FROM BEnOcean.TUsers" );
+    
+    int NumEPC = atoi(NumeroEPC);
+    
+    if( NumEPC == pResult->getString( "badge_number" ) ){
 
-    pDriver = sql::mysql::get_mysql_driver_instance();
-    pConnector = pDriver -> connect( AdresseBDD, Identifiant, Mdp ); // "tcp://192.168.0.28:3306", "mathis_carrere", "sbRQi87R7"
-    pStatement = pConnector -> createStatement();
-    cout << "Connexion" << endl;
+    //while ( pResult->next() ){
+
+        cout << "Badge inscrit dans la BDD : " << NumeroEPC << endl;
+
+        //}
+    }
+    else{
+
+        cout << "Ce badge n'est aps inscrit dans la base de donnees !" << endl;
+
+    }
+
+    FermetureBDD();
 
 }

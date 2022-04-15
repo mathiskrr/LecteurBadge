@@ -22,16 +22,20 @@ class CVerifBDD {
   private:
 
     CLecteurRFID * pBadge;
+
     sql::mysql::MySQL_Driver * pDriver;
     sql::Connection * pConnector;
     sql::Statement * pStatement;
     sql::ResultSet * pResult;
 
+    void ConnexionBDD();
+    void FermetureBDD();
+
   public:
 
     CVerifBDD();
     ~CVerifBDD();
-    void ConnexionBDD(string AdresseBDD, string Identifiant, string Mdp);
+    string VerificationBadge( string IndiceEPC );
 
 };
 
