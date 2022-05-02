@@ -57,28 +57,35 @@ void CVerifBDD::FermetureBDD() {
 
 }
 
-string CVerifBDD::VerificationBadge( string NumeroEPC ) {
+bool CVerifBDD::VerifierBadge( string NumeroEPC ) {
     
+    string Badge;
+    string Salle = "1";
+    string Requete = "SELECT CASE WHEN `badge_number` = " + NumeroEPC + " AND `room_id` = " + Salle + " THEN 'true' ELSE 'false' END AS Autorisation FROM BEnOcean.TUsers ORDER BY Autorisation DESC LIMIT 1;";
+
     ConnexionBDD();
 
-    pResult = pStatement->executeQuery( "SELECT badge_number FROM BEnOcean.TUsers" );
-    
-    int NumEPC = atoi(NumeroEPC);
-    
-    if( NumEPC == pResult->getString( "badge_number" ) ){
 
-    //while ( pResult->next() ){
+        pResult = pStatement->executeQuery( Requete );
 
-        cout << "Badge inscrit dans la BDD : " << NumeroEPC << endl;
+        pResult->next();
 
-        //}
-    }
-    else{
+        Badge = pResult->getString( "Autorisation" );
 
-        cout << "Ce badge n'est aps inscrit dans la base de donnees !" << endl;
 
-    }
+        if( Badge == "false" ){
+
+            cout << "Ce badge n'est pas inscrit dans la base de donnees !" << endl;
+
+        }
+        else{
+
+            cout << "Ce Badge est inscrit dans la base de donnees !" << endl;
+
+        }
 
     FermetureBDD();
+
+    return false;
 
 }

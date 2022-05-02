@@ -56,7 +56,7 @@ int main()
         }
       }
 
-    pBDD->VerificationBadge( NumeroEPC );
+    pBDD->VerifierBadge( NumeroEPC );
 
     delete pBDD;
     delete pBadge;

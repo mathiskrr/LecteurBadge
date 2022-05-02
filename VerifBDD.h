@@ -35,7 +35,7 @@ class CVerifBDD {
 
     CVerifBDD();
     ~CVerifBDD();
-    string VerificationBadge( string IndiceEPC );
+    bool VerifierBadge( string IndiceEPC );
 
 };
 
