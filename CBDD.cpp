@@ -77,19 +77,21 @@ bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
 
         delete pResult;
 
+        FermerBDD();
+
         if( Badge == "false" ){
 
             cout << "Ce badge n'est pas inscrit dans la base de donnees !" << endl;
+
+            return false;
 
         }
         else{
 
             cout << "Ce Badge est inscrit dans la base de donnees !" << endl;
 
+            return true;
+
         }
-
-    FermerBDD();
-
-    return false;
 
 }

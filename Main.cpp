@@ -35,8 +35,8 @@ int main()
     if (pReader->ParseError() < 0) {
         std::cout << "Can't load 'config.ini'\n";
     }
-    IP = pReader->GetString( "Database.Setting", "HostName", "" );
-    Salle = pReader->GetString( "Database.Setting", "Room", "" );
+    IP = pReader->GetBoolean( "Database.Setting", "HostName", "" );
+    Salle = pReader->GetBoolean( "Database.Setting", "Room", "" );
 
     CBDD *pBDD = new CBDD( IP, "mathis_carrere", "sbRQi87R7" );
 
