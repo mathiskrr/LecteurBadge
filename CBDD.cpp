@@ -19,51 +19,54 @@
 #include <iomanip>
 
 #include "LecteurRFID.h"
-#include "VerifBDD.h"
+#include "CBDD.h"
 #include "LSAByte.h"
 
 using namespace std;
 
 
-CVerifBDD::CVerifBDD() {
+CBDD::CBDD( string IP, string Login, string MDP ) {
 
-    this -> pBadge = new CLecteurRFID;
-
-}
-
-
-CVerifBDD::~CVerifBDD() {
-
-    delete pBadge;
+    this -> HostName = IP;
+    this -> UserID = Login;
+    this -> Password = MDP;
 
 }
 
 
-void CVerifBDD::ConnexionBDD() {
+CBDD::~CBDD() {
+
+}
+
+
+void CBDD::OuvrirBDD() {
 
     // Connexion a la Base de données
+
     pDriver = sql::mysql::get_mysql_driver_instance();
-    pConnector = pDriver -> connect( "tcp://192.168.0.28:3306", "mathis_carrere", "sbRQi87R7" );
+    pConnector = pDriver -> connect( HostName, UserID, Password );
     pStatement = pConnector -> createStatement();
 
 }
 
-void CVerifBDD::FermetureBDD() {
+void CBDD::FermerBDD() {
 
-    delete pDriver;
-    delete pResult;
+    
+    
     delete pStatement;
     delete pConnector;
+    delete pDriver;
+
 
 }
 
-bool CVerifBDD::VerifierBadge( string NumeroEPC ) {
+bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
     
     string Badge;
-    string Salle = "1";
+    
     string Requete = "SELECT CASE WHEN `badge_number` = " + NumeroEPC + " AND `room_id` = " + Salle + " THEN 'true' ELSE 'false' END AS Autorisation FROM BEnOcean.TUsers ORDER BY Autorisation DESC LIMIT 1;";
 
-    ConnexionBDD();
+    OuvrirBDD();
 
 
         pResult = pStatement->executeQuery( Requete );
@@ -72,6 +75,7 @@ bool CVerifBDD::VerifierBadge( string NumeroEPC ) {
 
         Badge = pResult->getString( "Autorisation" );
 
+        delete pResult;
 
         if( Badge == "false" ){
 
@@ -84,7 +88,7 @@ bool CVerifBDD::VerifierBadge( string NumeroEPC ) {
 
         }
 
-    FermetureBDD();
+    FermerBDD();
 
     return false;
 

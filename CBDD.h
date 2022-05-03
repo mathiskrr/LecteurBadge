@@ -1,5 +1,5 @@
-#ifndef VERIF_BDD_H
-#define VERIF_BDD_H
+#ifndef CBDD_H
+#define CBDD_H
 
 #include <string.h>
 #include <string>
@@ -17,26 +17,28 @@
 
 using namespace std;
 
-class CVerifBDD {
+class CBDD {
 
   private:
-
-    CLecteurRFID * pBadge;
 
     sql::mysql::MySQL_Driver * pDriver;
     sql::Connection * pConnector;
     sql::Statement * pStatement;
     sql::ResultSet * pResult;
 
-    void ConnexionBDD();
-    void FermetureBDD();
+    string HostName;
+    string UserID;
+    string Password;
+
+    void OuvrirBDD();
+    void FermerBDD();
 
   public:
 
-    CVerifBDD();
-    ~CVerifBDD();
-    bool VerifierBadge( string IndiceEPC );
+    CBDD( string IP, string Login, string MDP );
+    ~CBDD();
+    bool VerifierBadge( string IndiceEPC, string Salle );
 
 };
 
-#endif // VERIF_BDD_H
+#endif // CBDD_H

@@ -14,12 +14,20 @@ LecteurRFID.o: LecteurRFID.cpp
 	g++ -g -Wall -c LecteurRFID.cpp
 
 # compiling the source file.
-VerifBDD.o: VerifBDD.cpp
-	g++ -g -Wall -c VerifBDD.cpp
+CBDD.o: CBDD.cpp
+	g++ -g -Wall -c CBDD.cpp
+
+# compiling the source file.
+INIReader.o: INIReader.cpp
+	g++ -g -Wall -c INIReader.cpp
+
+# compiling the source file.
+ini.o: ini.cpp
+	g++ -g -Wall -c ini.cpp
 	
 # linking the program.
-Main: Main.o LSAByte.o LecteurRFID.o VerifBDD.o
-	g++ -g Main.o LSAByte.o LecteurRFID.o VerifBDD.o -o Main -lmysqlcppconn
+Main: Main.o LSAByte.o LecteurRFID.o CBDD.o INIReader.o ini.o
+	g++ -g Main.o LSAByte.o LecteurRFID.o CBDD.o INIReader.o ini.o -o Main -lmysqlcppconn
 
 # cleaning everything that can be automatically recreated with "make".
 clean:

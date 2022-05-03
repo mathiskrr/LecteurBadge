@@ -13,7 +13,8 @@
 
 #include "LSAByte.h"
 #include "LecteurRFID.h"
-#include "VerifBDD.h"
+#include "CBDD.h"
+#include "INIReader.h"
 
 using namespace std;
 
@@ -23,7 +24,21 @@ using namespace std;
 int main()
 {
     CLecteurRFID *pBadge = new CLecteurRFID;
-    CVerifBDD *pBDD = new CVerifBDD;
+
+    string IP;
+    string Salle;
+
+    INIReader *pReader = new INIReader("config.ini");
+
+    //INIReader reader("config.ini");
+
+    if (pReader->ParseError() < 0) {
+        std::cout << "Can't load 'config.ini'\n";
+    }
+    IP = pReader->GetString( "Database.Setting", "HostName", "" );
+    Salle = pReader->GetString( "Database.Setting", "Room", "" );
+
+    CBDD *pBDD = new CBDD( IP, "mathis_carrere", "sbRQi87R7" );
 
       int Indice;
       string NumeroEPC;
@@ -56,10 +71,17 @@ int main()
         }
       }
 
-    pBDD->VerifierBadge( NumeroEPC );
+    pBDD->VerifierBadge( NumeroEPC, Salle );
 
-    delete pBDD;
+
+    cout << "ok1" << endl;
     delete pBadge;
+    cout << "ok2" << endl;
+    delete pBDD;
+    cout << "ok3" << endl;
+
+
+  delete pBadge;
 
 }
 
