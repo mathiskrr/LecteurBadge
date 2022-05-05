@@ -13,7 +13,7 @@
 #include <cppconn/statement.h>
 
 #include "LSAByte.h"
-#include "LecteurRFID.h"
+#include "CLecteurRFID.h"
 
 using namespace std;
 

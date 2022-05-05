@@ -12,9 +12,10 @@
 #include <cppconn/statement.h>
 
 #include "LSAByte.h"
-#include "LecteurRFID.h"
+#include "CLecteurRFID.h"
 #include "CBDD.h"
 #include "INIReader.h"
+#include "CPorte.h"
 
 using namespace std;
 
@@ -26,6 +27,8 @@ int main()
     CLecteurRFID *pBadge = new CLecteurRFID;
 
     string IP;
+    string Login;
+    string Mdp;
     string Salle;
 
     INIReader *pReader = new INIReader("config.ini");
@@ -35,10 +38,14 @@ int main()
     if (pReader->ParseError() < 0) {
         std::cout << "Can't load 'config.ini'\n";
     }
-    IP = pReader->GetBoolean( "Database.Setting", "HostName", "" );
-    Salle = pReader->GetBoolean( "Database.Setting", "Room", "" );
+    IP = pReader->GetString( "Database.Setting", "HostName", "" );
+    Salle = pReader->GetString( "Database.Setting", "Room", "" );
+    Login = pReader->GetString( "Database.Setting", "UserID", "" );
+    Mdp = pReader->GetString( "Database.Setting", "Password", "" );
 
-    CBDD *pBDD = new CBDD( IP, "mathis_carrere", "sbRQi87R7" );
+    CBDD *pBDD = new CBDD( IP, Login, Mdp );
+
+    while(1){
 
       int Indice;
       string NumeroEPC;
@@ -55,33 +62,35 @@ int main()
 
       NumeroEPC = pBadge->GetEPC(0);
 
-      cout << "NbEPCLues : " << (int)NbEPCLues << endl;
-      
-      if( NbEPCLues == 0)
+      if( NumeroEPC == "" )
       {
-        cout << "Pas de Badge à scanner !" << endl;
-      }else{
-        cout << "Numéro Badge : " << pBadge->GetEPC(0) << endl;
-
-        for(Indice = 0; Indice < vsEPC.size(); Indice++ )
+        cout << "Aucun Numéro de Badge lue !" << endl;
+      }
+      else{
+        cout << "NbEPCLues : " << (int)NbEPCLues << endl;
+        
+        if( NbEPCLues == 0)
         {
+          cout << "Pas de Badge à scanner !" << endl;
+        }else{
+          cout << "Numéro Badge : " << pBadge->GetEPC(0) << endl;
 
-          cout << "Liste Numéro Badge : " << vsEPC[Indice] << endl;
+          for(Indice = 0; Indice < vsEPC.size(); Indice++ )
+          {
 
+            cout << "Liste Numéro Badge : " << vsEPC[Indice] << endl;
+
+          }
         }
+
+        pBDD->VerifierBadge( NumeroEPC, Salle );
+
       }
 
-    pBDD->VerifierBadge( NumeroEPC, Salle );
+    }
 
-
-    cout << "ok1" << endl;
-    delete pBadge;
-    cout << "ok2" << endl;
-    delete pBDD;
-    cout << "ok3" << endl;
-
-
-  delete pBadge;
+      delete pBDD;
+      delete pBadge;
 
 }
 

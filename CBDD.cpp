@@ -18,7 +18,7 @@
 #include <cppconn/statement.h>
 #include <iomanip>
 
-#include "LecteurRFID.h"
+#include "CLecteurRFID.h"
 #include "CBDD.h"
 #include "LSAByte.h"
 
@@ -35,7 +35,7 @@ CBDD::CBDD( string IP, string Login, string MDP ) {
 
 
 CBDD::~CBDD() {
-
+    
 }
 
 
@@ -51,13 +51,8 @@ void CBDD::OuvrirBDD() {
 
 void CBDD::FermerBDD() {
 
-    
-    
     delete pStatement;
     delete pConnector;
-    delete pDriver;
-
-
 }
 
 bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
@@ -69,29 +64,29 @@ bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
     OuvrirBDD();
 
 
-        pResult = pStatement->executeQuery( Requete );
+    pResult = pStatement->executeQuery( Requete );
 
-        pResult->next();
+    pResult->next();
 
-        Badge = pResult->getString( "Autorisation" );
+    Badge = pResult->getString( "Autorisation" );
 
-        delete pResult;
+    delete pResult;
 
-        FermerBDD();
+    FermerBDD();
 
-        if( Badge == "false" ){
+    if( Badge == "false" ){
 
-            cout << "Ce badge n'est pas inscrit dans la base de donnees !" << endl;
+        cout << "Ce badge n'est pas inscrit dans la base de donnees !" << endl;
 
-            return false;
+        return false;
 
-        }
-        else{
+    }
+    else{
 
-            cout << "Ce Badge est inscrit dans la base de donnees !" << endl;
+        cout << "Ce Badge est inscrit dans la base de donnees !" << endl;
 
-            return true;
+        return true;
 
-        }
+    }
 
 }

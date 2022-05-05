@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <iomanip>
 
-#include "LecteurRFID.h"
+#include "CLecteurRFID.h"
 #include "LSAByte.h"
 
 using namespace std;
@@ -40,11 +40,10 @@ CLecteurRFID::CLecteurRFID() {
 
 
 CLecteurRFID::~CLecteurRFID() {
-      //cout << "test1" << endl;
+
     pLecteur -> Fermer();
-      //cout << "test1" << endl;
     delete pLecteur;
-      //cout << "test1" << endl;
+
   }
 
 
