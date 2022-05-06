@@ -59,7 +59,7 @@ bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
     
     string Badge;
     
-    string Requete = "SELECT CASE WHEN `badge_number` = " + NumeroEPC + " AND `room_id` = " + Salle + " THEN 'true' ELSE 'false' END AS Autorisation FROM BEnOcean.TUsers ORDER BY Autorisation DESC LIMIT 1;";
+    string Requete = "SELECT CASE WHEN `badge_number` = " + NumeroEPC + " AND `room_name` = \"" + Salle + "\" THEN 'true' ELSE 'false' END AS Autorisation FROM BEnOcean.TUsers u, BEnOcean.TRoom r WHERE u.room_id = r.room_id ORDER BY Autorisation DESC LIMIT 1;";
 
     OuvrirBDD();
 

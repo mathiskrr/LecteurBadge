@@ -17,14 +17,16 @@ using namespace std;
 class CPorte {
 
   private:
-
+  
+  CLSAByte * pLiaison;
+  std::vector < char > Symbole;
 
   public:
 
-    CPorte( );
-    ~CPorte( );
-    bool Ouvrir( );
-    bool Fermer( );
+    CPorte();
+    ~CPorte();
+    bool Ouvrir();
+    bool Erreur();
 
 };
 

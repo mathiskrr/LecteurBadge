@@ -72,11 +72,11 @@ char CLecteurRFID::Scanner() {
 
       // Envoie de la TrameInventaire : Len / Adr / Cmd ( Inventory ) / LSB-CRC16 / MSB-CRC16
 
-      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[0]);
-      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[1]);
-      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[2]);
-      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[3]);
-      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[4]);
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[0] );
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[1] );
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[2] );
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[3] );
+      pLecteur -> EnvoyerCaractere( & this -> TrameInventaire[4] );
 
       usleep(100000);
 

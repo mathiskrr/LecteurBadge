@@ -25,6 +25,7 @@ using namespace std;
 int main()
 {
     CLecteurRFID *pBadge = new CLecteurRFID;
+    CPorte *pPorte = new CPorte;
 
     string IP;
     string Login;
@@ -83,7 +84,14 @@ int main()
           }
         }
 
-        pBDD->VerifierBadge( NumeroEPC, Salle );
+        if( pBDD->VerifierBadge( NumeroEPC, Salle ) == true){
+
+          pPorte->Ouvrir();
+
+        }else{
+
+          pPorte->Erreur();
+        }
 
       }
 
@@ -91,6 +99,7 @@ int main()
 
       delete pBDD;
       delete pBadge;
+      delete pPorte;
 
 }
 
