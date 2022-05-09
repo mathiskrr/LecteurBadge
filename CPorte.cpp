@@ -26,7 +26,7 @@ CPorte::CPorte() {
 
     this -> pLiaison = new CLSAByte;
 
-    this -> Symbole = {'\x4F','\x46',};
+    this -> Symbole = {'O','E'};
 
     pLiaison -> Ouvrir("/dev/ttyUSB1", B115200 | CS8 | CLOCAL | CREAD);
 
@@ -47,15 +47,9 @@ bool CPorte::Ouvrir() {
 
       // Envoie du code ASCII du symbole O;
 
-      //pLiaison -> EnvoyerCaractere( & this -> Symbole[0] );
+      pLiaison -> EnvoyerCaractere( & this -> Symbole[0] );
 
       cout << "Envoie du caractère O" << endl;
-
-      usleep(100000);
-
-      //pLiaison -> RecevoirCaractere( & len);
-
-      cout << "Reception du caractère O" << endl;
 
 }
 
@@ -63,16 +57,10 @@ bool CPorte::Erreur() {
     
     pLiaison -> ViderTampon();
 
-      // Envoie du code ASCII du symbole F;
+      // Envoie du code ASCII du symbole E;
 
-      //pLiaison -> EnvoyerCaractere( & this -> Symbole[1] );
+      pLiaison -> EnvoyerCaractere( & this -> Symbole[1] );
 
       cout << "Envoie du caractère E" << endl;
-
-      usleep(100000);
-
-      //pLiaison -> RecevoirCaractere( & len);
-
-      cout << "Reception du caractère E" << endl;
     
 }

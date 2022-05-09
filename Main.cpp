@@ -55,7 +55,7 @@ int main()
 
       pBadge->Scanner();
 
-      usleep(100000);
+      usleep(1000000);
 
       NbEPCLues = pBadge->Scanner();
 
