@@ -24,7 +24,7 @@ using namespace std;
 
 int main()
 {
-    CLecteurRFID *pBadge = new CLecteurRFID;
+    CLecteurRFID *pLecteur = new CLecteurRFID;
     CPorte *pPorte = new CPorte;
 
     string IP;
@@ -53,15 +53,15 @@ int main()
       std::vector < string > vsEPC;
       char NbEPCLues;
 
-      pBadge->Scanner();
+      pLecteur->Scanner();
 
       usleep(1000000);
 
-      NbEPCLues = pBadge->Scanner();
+      NbEPCLues = pLecteur->Scanner();
 
-      vsEPC = pBadge->GetListeEPC();
+      vsEPC = pLecteur->GetListeEPC();
 
-      NumeroEPC = pBadge->GetEPC(0);
+      NumeroEPC = pLecteur->GetEPC(0);
 
       if( NumeroEPC == "" )
       {
@@ -74,7 +74,7 @@ int main()
         {
           cout << "Pas de Badge à scanner !" << endl;
         }else{
-          cout << "Numéro Badge : " << pBadge->GetEPC(0) << endl;
+          cout << "Numéro Badge : " << pLecteur->GetEPC(0) << endl;
 
           for(Indice = 0; Indice < vsEPC.size(); Indice++ )
           {
@@ -98,7 +98,7 @@ int main()
     }
 
       delete pBDD;
-      delete pBadge;
+      delete pLecteur;
       delete pPorte;
 
 }

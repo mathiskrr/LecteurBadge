@@ -82,6 +82,8 @@ char CLecteurRFID::Scanner() {
 
       while (pLecteur -> RecevoirCaractere( & len) != 0);
 
+      cout << hex << (int)len << " ";
+
     this -> TrameRecu.push_back(len);
 
     for (i = 1; i <= len; i = i + 1) {
@@ -91,8 +93,12 @@ char CLecteurRFID::Scanner() {
         Resultat = pLecteur -> RecevoirCaractere( & Donnees);
       } while (Resultat != 0);
 
+
+      cout << hex << (int)Donnees << " ";
+
       this -> TrameRecu.push_back(Donnees);
     }
+
 
     CRCCalcul = uiCrc16Cal((const unsigned char * ) & this -> TrameRecu[0], len - 2 + 1);
 
