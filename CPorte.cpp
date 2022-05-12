@@ -28,12 +28,16 @@ CPorte::CPorte() {
 
     this -> Symbole = {'O','E'};
 
+    // Ouverture de la liaison série
+
     pLiaison -> Ouvrir("/dev/ttyUSB1", B115200 | CS8 | CLOCAL | CREAD);
 
 }
 
 
 CPorte::~CPorte() {
+
+    // Fermeture de la liaison série
 
     pLiaison -> Fermer();
 
@@ -49,8 +53,6 @@ bool CPorte::Ouvrir() {
 
       pLiaison -> EnvoyerCaractere( & this -> Symbole[0] );
 
-      cout << "Envoie du caractère O" << endl;
-
 }
 
 bool CPorte::Erreur() {
@@ -60,7 +62,5 @@ bool CPorte::Erreur() {
       // Envoie du code ASCII du symbole E;
 
       pLiaison -> EnvoyerCaractere( & this -> Symbole[1] );
-
-      cout << "Envoie du caractère E" << endl;
     
 }

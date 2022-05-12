@@ -34,6 +34,8 @@ CLecteurRFID::CLecteurRFID() {
     '\xB4'
   };
 
+  // Ouverture de la liaison série
+
   pLecteur -> Ouvrir("/dev/ttyUSB0", B57600 | CS8 | CLOCAL | CREAD);
 
 }
@@ -41,7 +43,10 @@ CLecteurRFID::CLecteurRFID() {
 
 CLecteurRFID::~CLecteurRFID() {
 
+    // Fermeture de la liaison série
+
     pLecteur -> Fermer();
+
     delete pLecteur;
 
   }
@@ -82,7 +87,7 @@ char CLecteurRFID::Scanner() {
 
       while (pLecteur -> RecevoirCaractere( & len) != 0);
 
-      cout << hex << (int)len << " ";
+      //cout << hex << (int)len << " ";
 
     this -> TrameRecu.push_back(len);
 
@@ -94,11 +99,12 @@ char CLecteurRFID::Scanner() {
       } while (Resultat != 0);
 
 
-      cout << hex << (int)Donnees << " ";
+      //cout << hex << (int)Donnees << " ";
 
       this -> TrameRecu.push_back(Donnees);
     }
 
+    // Calcul du CRC de la Trame Reçu
 
     CRCCalcul = uiCrc16Cal((const unsigned char * ) & this -> TrameRecu[0], len - 2 + 1);
 

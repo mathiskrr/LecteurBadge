@@ -61,6 +61,8 @@ bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
     
     string Requete = "SELECT CASE WHEN `badge_number` = " + NumeroEPC + " AND `room_name` = \"" + Salle + "\" THEN 'true' ELSE 'false' END AS Autorisation FROM BEnOcean.TUsers u, BEnOcean.TRoom r WHERE u.room_id = r.room_id ORDER BY Autorisation DESC LIMIT 1;";
 
+    // Ouverture de la Base de données
+
     OuvrirBDD();
 
 
@@ -71,6 +73,8 @@ bool CBDD::VerifierBadge( string NumeroEPC, string Salle ) {
     Badge = pResult->getString( "Autorisation" );
 
     delete pResult;
+
+    // Fermeture de la Base de données
 
     FermerBDD();
 
