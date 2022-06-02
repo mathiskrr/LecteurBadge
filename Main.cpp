@@ -70,9 +70,9 @@ int main()
       else{
         cout << "NbEPCLues : " << (int)NbEPCLues << endl;
         
-        if( NbEPCLues == 0)
+        if( NbEPCLues == 0 || NbEPCLues > 1 )
         {
-          cout << "Pas de Badge à scanner !" << endl;
+          cout << "Veuillez scanner 1 badge !" << endl;
         }else{
           cout << "Numéro Badge : " << pLecteur->GetEPC(0) << endl;
 
@@ -82,15 +82,16 @@ int main()
             cout << "Liste Numéro Badge : " << vsEPC[Indice] << endl;
 
           }
-        }
 
-        if( pBDD->VerifierBadge( NumeroEPC, Salle ) == true){
+          if( pBDD->VerifierBadge( NumeroEPC, Salle ) == true){
 
           pPorte->Ouvrir();
 
         }else{
 
           pPorte->Erreur();
+        }
+        
         }
 
       }

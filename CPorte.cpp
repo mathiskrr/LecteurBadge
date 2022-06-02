@@ -49,7 +49,7 @@ bool CPorte::Ouvrir() {
 
       pLiaison -> EnvoyerCaractere( & this -> Symbole[0] );
 
-      cout << "Envoie du caractère O" << endl;
+      cout << "Envoie du caractère O : Ouvrir" << endl;
 
 }
 
@@ -61,6 +61,6 @@ bool CPorte::Erreur() {
 
       pLiaison -> EnvoyerCaractere( & this -> Symbole[1] );
 
-      cout << "Envoie du caractère E" << endl;
+      cout << "Envoie du caractère E : Erreur" << endl;
     
 }
